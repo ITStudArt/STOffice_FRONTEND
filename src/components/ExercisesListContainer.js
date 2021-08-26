@@ -21,9 +21,10 @@ class ExercisesListContainer extends React.Component{
     }
 
     render() {
+        const {exercises, isFetching} = this.props;
         return (
 
-            <ExercisesList exercises={this.props.exercises}/>
+            <ExercisesList exercises={exercises} isFetching={isFetching}/>
 
         );
     }
