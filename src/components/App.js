@@ -1,6 +1,7 @@
 import React from "react";
 import {Route, Switch} from "react-router";
 import LoginForm from "./LoginForm";
+import ExercisesListContainer from "./ExercisesListContainer";
 
 class App extends React.Component{
     render() {
@@ -8,7 +9,8 @@ class App extends React.Component{
             <div>
                 Hello! Main Page
                 <Switch>
-                    <Route path="/login" component={LoginForm}/>
+                    <Route path={"/login"} component={LoginForm}/>
+                    <Route path={"/"} component={ExercisesListContainer}/>
                 </Switch>
             </div>
         );
