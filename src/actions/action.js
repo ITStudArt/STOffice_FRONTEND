@@ -1,28 +1,35 @@
-export const EXERCISES_LIST = 'EXERCISES_LIST';
+import {requests} from "../agent";
+
+export const EXERCISES_LIST_REQUEST = 'EXERCISES_LIST_REQUEST ';
+export const EXERCISES_LIST_RECEIVED = 'EXERCISES_LIST_RECEIVED';
+export const EXERCISES_LIST_ERROR = 'EXERCISES_LIST_ERROR';
 export const EXERCISES_LIST_ADD = 'EXERCISES_LIST_ADD';
 
-export const exercisesList = () =>({
-    type: EXERCISES_LIST,
-    data: [
-        {
-            id: 1,
-            title: 'Hello'
-        },
-        {
-            id: 2,
-            title: 'Hello 2'
-        },
-        {
-            id: 3,
-            title: 'Hello_3'
-        }
-    ]
+export const exercisesListRequest = () =>({
+    type: EXERCISES_LIST_REQUEST
 });
 
+export const exercisesListError = (error) =>({
+    type: EXERCISES_LIST_ERROR,
+    error
+});
+export const exercisesListReceived= (data) =>({
+    type: EXERCISES_LIST_RECEIVED,
+    data
+});
+
+export const exercisesListFetch = () => {
+ return (dispatch) => {
+     dispatch(exercisesListRequest());
+     return requests.get('/exercises')
+         .then(response=>dispatch(exercisesListReceived(response)))
+         .catch(error=>dispatch(exercisesListError(error)));
+ }
+};
 export const exercisesListAdd = () =>({
     type: EXERCISES_LIST_ADD,
     data: {
         id: Math.floor(Math.random()*100+3),
-        title: 'A newly added exercise'
+        name: 'A newly added exercise'
     }
 });
