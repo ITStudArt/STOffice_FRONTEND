@@ -13,6 +13,8 @@ export default(state={
             return{
                 ...state,
                 exercises: state.exercises ? state.exercises.concat(action.data) : state.exercises
-            };
+            }
+        default:
+            return state;
     }
 }
