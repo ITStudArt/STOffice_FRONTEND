@@ -7,17 +7,23 @@ import PatientsListContainer from "./PatientsListContainer";
 import TherapistContainer from "./TherapistContainer";
 import PatientContainer from "./PatientContainer";
 import Header from "./Header";
+import {requests} from "../agent";
 
 class App extends React.Component{
+    constructor(props) {
+        super(props);
+        const token = window.localStorage.getItem('jwtToken');
+        if (token){
+            requests.setToken(token);
+        }
+    }
     render() {
         return (
             <div>
                 <Header/>
                 <Switch>
-                    <Route path={"/login"} component={LoginForm}/>
-
+                    <Route path={"/login"} component={props => <LoginForm {...props} />} />
                     <Route path={"/exercises"} component={ExercisesListContainer}/>
-
                     <Route path={"/therapists/:id"} component={TherapistContainer}/>
                     <Route path={"/therapists"} component={TherapistsListContainer}/>
                     

@@ -6,7 +6,7 @@ export default class Header extends React.Component{
         return(
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
                 <div className="container-fluid">
-                    <Link className="navbar-brand" to="/">
+                    <Link className="navbar-brand" to="/login">
                             STOffice
                     </Link>
                 </div>
@@ -29,6 +29,7 @@ export default class Header extends React.Component{
                         <li className="nav-item">
                             <Link className="nav-link active" to="/therapists">Therapists</Link>
                         </li>
+
                         <li className="nav-item">
                             <div className="dropdown">
                                 <a className="nav-link active dropdown-toggle" href="#" role="button"

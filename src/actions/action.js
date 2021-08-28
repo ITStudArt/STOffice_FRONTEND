@@ -1,5 +1,6 @@
 import {requests} from "../agent";
 import * as CONSTRAINTS from "./constraints";
+import {USER_LOGIN_SUCCESS} from "./constraints";
 
 
 
@@ -154,10 +155,17 @@ export const patientsListFetch = () => {
 
 // Login
 
+export const userLoginSuccess = (token, userId) => {
+    return {
+        type: USER_LOGIN_SUCCESS,
+        token,
+        userId
+    }
+};
 export const userLoginAttempt = (email, password) => {
     return (dispatch) => {
-        return requests.post('/login_check', {email, password}).then(
-            response => console.log(response))
+        return requests.post('/login_check', {email, password},false).then(
+            response => dispatch(userLoginSuccess(response.token,response.id)))
             .catch(error => {
                 console.log('Login Failed');
             });
