@@ -14,7 +14,7 @@ class ExercisesList extends React.Component{
         return (
             <div>
                     {exercises && exercises.map(exercise => (
-                        <div className={"card mb-3 mt-3 shadow-sm"} key={exercise.id}><h3>Some text</h3></div>
+                        <div className={"card mb-3 mt-3 shadow-sm"} key={exercise.id}><h3>{exercise.name}t</h3></div>
                         //<img src={exercises_files_path+exercise.url} key={exercise.id}></img>
 
                     ))}
