@@ -1,36 +1,36 @@
 import {
-    EXERCISES_LIST_ADD,
-    EXERCISES_LIST_ERROR,
-    EXERCISES_LIST_RECEIVED,
-    EXERCISES_LIST_REQUEST
+    THERAPIST_ADD,
+    THERAPIST_ERROR,
+    THERAPIST_RECEIVED,
+    THERAPIST_REQUEST, THERAPIST_UNLOAD
 } from "../actions/constraints";
 
 export default(state={
-    exercises: null,
+    therapist: null,
     isFetching: false
 },action)=>{
     switch(action.type){
-        case EXERCISES_LIST_REQUEST:
+        case THERAPIST_REQUEST:
             return {
                 ...state,
                 isFetching: true
             };
-        case EXERCISES_LIST_RECEIVED:
+        case THERAPIST_RECEIVED:
             return{
                 ...state,
-                exercises: action.data['hydra:member'],
+                therapist: action.data,
                 isFetching: false
             };
-        case EXERCISES_LIST_ERROR:
+        case THERAPIST_ERROR:
             return{
                 ...state,
                 isFetching: false,
-                exercises: null
+                therapist: null
             };
-        case EXERCISES_LIST_ADD:
-            return{
+        case THERAPIST_UNLOAD:
+            return {
                 ...state,
-                exercises: state.exercises ? state.exercises.concat(action.data) : state.exercises
+                isFetching: false
             };
         default:
             return state;

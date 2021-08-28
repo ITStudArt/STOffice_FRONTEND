@@ -3,7 +3,7 @@ import {
     THERAPISTS_LIST_ERROR,
     THERAPISTS_LIST_RECEIVED,
     THERAPISTS_LIST_REQUEST
-} from "../actions/action";
+} from "../actions/constraints";
 
 export default(state={
     therapists: null,

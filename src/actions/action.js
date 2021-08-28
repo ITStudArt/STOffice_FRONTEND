@@ -1,21 +1,23 @@
 import {requests} from "../agent";
-import {
-} from "./constraints";
+import * as CONSTRAINTS from "./constraints";
 
 
-// Exercises
+
+
+// Exercise LIST
 export const exercisesListRequest = () =>({
-    type: EXERCISES_LIST_REQUEST
+    type: CONSTRAINTS.EXERCISES_LIST_REQUEST
 });
 
 export const exercisesListError = (error) =>({
-    type: EXERCISES_LIST_ERROR,
+    type: CONSTRAINTS.EXERCISES_LIST_ERROR,
     error
 });
 export const exercisesListReceived= (data) =>({
-    type: EXERCISES_LIST_RECEIVED,
+    type: CONSTRAINTS.EXERCISES_LIST_RECEIVED,
     data
 });
+
 
 export const exercisesListFetch = () => {
     return (dispatch) => {
@@ -26,7 +28,7 @@ export const exercisesListFetch = () => {
     }
 };
 export const exercisesListAdd = () =>({
-    type: EXERCISES_LIST_ADD,
+    type: CONSTRAINTS.EXERCISES_LIST_ADD,
     data: {
         id: Math.floor(Math.random()*100+3),
         name: 'A newly added exercise'
@@ -34,16 +36,47 @@ export const exercisesListAdd = () =>({
 });
 
 // Therapist
+
+export const therapistRequest = () =>({
+    type: CONSTRAINTS.THERAPIST_REQUEST
+});
+
+export const therapistError = (error) =>({
+    type: CONSTRAINTS.THERAPIST_ERROR,
+    error
+});
+export const therapistReceived= (data) =>({
+    type: CONSTRAINTS.THERAPIST_RECEIVED,
+    data
+});
+export const therapistFetch = (id) =>
+{
+    return(dispatch)=>{
+        dispatch(therapistRequest());
+        return requests.get(`/users/${id}`)
+            .then(response => dispatch(therapistReceived(response)))
+            .catch(error => dispatch(therapistError(error)));
+
+    }
+};
+export const therapistUnload = () =>(
+    {
+        type: CONSTRAINTS.THERAPIST_UNLOAD
+    }
+);
+
+
+// Therapist LIST
 export const therapistsListRequest = () =>({
-    type: THERAPISTS_LIST_REQUEST
+    type: CONSTRAINTS.THERAPISTS_LIST_REQUEST
 });
 
 export const therapistsListError = (error) =>({
-    type: THERAPISTS_LIST_ERROR,
+    type: CONSTRAINTS.THERAPISTS_LIST_ERROR,
     error
 });
 export const therapistsListReceived= (data) =>({
-    type: THERAPISTS_LIST_RECEIVED,
+    type: CONSTRAINTS.THERAPISTS_LIST_RECEIVED,
     data
 });
 
@@ -56,33 +89,59 @@ export const therapistsListFetch = () => {
     }
 };
 export const therapistsListAdd = () =>({
-    type: THERAPISTS_LIST_ADD,
+    type: CONSTRAINTS.THERAPISTS_LIST_ADD,
     data: {
         id: Math.floor(Math.random()*100+3),
         name: 'A newly added therapist'
     }
 });
 
-// Patients
+// Patient
+export const patientRequest = () =>({
+    type: CONSTRAINTS.PATIENT_REQUEST
+});
+
+export const patientError = (error) =>({
+    type: CONSTRAINTS.PATIENT_ERROR,
+    error
+});
+export const patientReceived= (data) =>({
+    type: CONSTRAINTS.PATIENT_RECEIVED,
+    data
+});
+
+export const patientFetch = (id) =>
+    {
+        return(dispatch)=>{
+            dispatch(patientRequest());
+            return requests.get(`/users/${id}`)
+                .then(response => dispatch(patientReceived(response)))
+                .catch(error => dispatch(patientError(error)));
+
+            }
+    };
+
+// Patients List
 export const patientsListRequest = () =>({
-    type: PATIENTS_LIST_REQUEST
+    type: CONSTRAINTS.PATIENTS_LIST_REQUEST
 });
 
 export const patientsListError = (error) =>({
-    type: PATIENTS_LIST_ERROR,
+    type: CONSTRAINTS.PATIENTS_LIST_ERROR,
     error
 });
 export const patientsListReceived= (data) =>({
-    type: PATIENTS_LIST_RECEIVED,
+    type: CONSTRAINTS.PATIENTS_LIST_RECEIVED,
     data
 });
 export const patientsListAdd = () =>({
-    type: PATIENTS_LIST_ADD,
+    type: CONSTRAINTS.PATIENTS_LIST_ADD,
     data: {
         id: Math.floor(Math.random()*100+3),
         name: 'A newly added patient'
     }
 });
+
 
 export const patientsListFetch = () => {
     return (dispatch) => {

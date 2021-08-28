@@ -3,7 +3,7 @@ import {
     PATIENTS_LIST_ERROR,
     PATIENTS_LIST_RECEIVED,
     PATIENTS_LIST_REQUEST
-} from "../actions/action";
+} from "../actions/constraints";
 
 export default(state={
     patients: null,
