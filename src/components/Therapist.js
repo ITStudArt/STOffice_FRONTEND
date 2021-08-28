@@ -2,13 +2,11 @@ import React from "react";
 import MetaTags from 'react-meta-tags';
 import TherapistsList from "./TherapistsList";
 import "./styles/userProfile.css";
+import {Spinner} from "./Spinner";
 
 export class Therapist extends React.Component {
     render() {
-        const {therapist, isFetching} = this.props;
-        if (isFetching) {
-            return (<div><i className={"fas fa-spinner fa-spin"}/></div>);
-        }
+        const {therapist} = this.props;
         if (therapist === null) {
             return (<div>Therapist doesn't exist</div>);
         }

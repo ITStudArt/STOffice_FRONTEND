@@ -3,6 +3,7 @@ import ExercisesList from "./ExercisesList";
 import {exercisesListAdd, exercisesListFetch} from "../actions/action";
 import {connect} from "react-redux";
 import {requests} from "../agent";
+import {Spinner} from "./Spinner";
 
 
 const mapStateToProps = state =>(
@@ -20,10 +21,12 @@ class ExercisesListContainer extends React.Component{
 
     render() {
         const {exercises, isFetching} = this.props;
+        if(isFetching){
+            return (<Spinner/>);
+        }
         return (
 
-            <ExercisesList exercises={exercises} isFetching={isFetching}/>
-
+            <ExercisesList exercises={exercises}/>
         );
     }
 }

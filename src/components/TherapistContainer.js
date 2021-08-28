@@ -20,8 +20,8 @@ class TherapistContainer extends React.Component{
         this.props.therapistUnload();
     }
     render(){
-        const {isFetching, therapist} = this.props;
-        return (<Therapist isFetching={isFetching} therapist={therapist}/>)
+        const {therapist} = this.props;
+        return (<Therapist therapist={therapist}/>)
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(TherapistContainer);

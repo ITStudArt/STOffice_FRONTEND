@@ -1,16 +1,13 @@
 import React from "react";
+import {Spinner} from "./Spinner";
 
 class ExercisesList extends React.Component{
     render() {
-        const {exercises, isFetching} = this.props;
-        if(isFetching){
-            return (<div><i className={"fas fa-spinner fa-spin"}/></div>);
-        }
+        const {exercises} = this.props;
         if(exercises === null || exercises.length===0){
             return (<div>No Exercises available</div>);
         }
         const exercises_files_path = 'C:\\Users\\Artur\\Documents\\ZTPAI_New\\STOffice\\public';
-        console.log(exercises_files_path);
         return (
             <div>
                     {exercises && exercises.map(exercise => (

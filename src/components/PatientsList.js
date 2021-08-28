@@ -1,12 +1,10 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import {Spinner} from "./Spinner";
 
 class PatientsList extends React.Component{
     render() {
-        const {patients, isFetching} = this.props;
-        if(isFetching){
-            return (<div><i className={"fas fa-spinner fa-spin"}/></div>);
-        }
+        const {patients} = this.props;
         if(patients === null || patients.length===0){
             return (<div>No patients available</div>);
         }

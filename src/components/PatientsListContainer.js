@@ -3,6 +3,7 @@ import PatientsList from "./PatientsList";
 import {patientsListAdd, patientsListFetch} from "../actions/action";
 import {connect} from "react-redux";
 import {requests} from "../agent";
+import {Spinner} from "./Spinner";
 
 
 const mapStateToProps = state =>(
@@ -20,9 +21,12 @@ class PatientsListContainer extends React.Component{
 
     render() {
         const {patients, isFetching} = this.props;
+        if(isFetching){
+            return (<Spinner/>);
+        }
         return (
 
-            <PatientsList patients={patients} isFetching={isFetching}/>
+            <PatientsList patients={patients}/>
 
         );
     }
