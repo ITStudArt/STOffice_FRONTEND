@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 class TherapistsList extends React.Component{
     render() {
@@ -13,7 +14,7 @@ class TherapistsList extends React.Component{
         return (
             <div>
                 {therapists && therapists.map(therapist => (
-                    <div className={"card mb-3 mt-3 shadow-sm"} key={therapist.id}><h3>{therapist.name} {therapist.surname}</h3></div>
+                    <div className={"card mb-3 mt-3 shadow-sm"} key={therapist.id}><Link to={`/therapists/${therapist.id}`}>{therapist.name} {therapist.surname}</Link></div>
                     //<img src={exercises_files_path+exercise.url} key={exercise.id}></img>
 
                 ))}

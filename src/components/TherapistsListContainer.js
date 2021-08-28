@@ -11,12 +11,10 @@ const mapStateToProps = state =>(
     }
 );
 const mapDispatchToProps ={
-    therapistsListAdd,
     therapistsListFetch
 };
 class TherapistsListContainer extends React.Component{
     componentDidMount() {
-        setTimeout(this.props.therapistsListAdd,10000);
         this.props.therapistsListFetch();
     }
 

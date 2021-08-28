@@ -21,21 +21,20 @@ export default class Header extends React.Component{
                             <Link to={"/"} className="nav-link">Home <span className="sr-only">(current)</span></Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/patients">Patients</Link>
+                            <Link className="nav-link active" to="/patients">Patients</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/exercises">Exercises</Link>
+                            <Link className="nav-link active" to="/exercises">Exercises</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/therapists">Therapists</Link>
+                            <Link className="nav-link active" to="/therapists">Therapists</Link>
                         </li>
                         <li className="nav-item">
                             <div className="dropdown">
-                                <a className="btn btn-secondary dropdown-toggle" href="#" role="button"
+                                <a className="nav-link active dropdown-toggle" href="#" role="button"
                                    id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                     Dropdown link
                                 </a>
-
                                 <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                     <li><a className="dropdown-item" href="#">Action</a></li>
                                     <li><a className="dropdown-item" href="#">Another action</a></li>
