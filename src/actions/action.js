@@ -152,4 +152,17 @@ export const patientsListFetch = () => {
     }
 };
 
+// Login
+
+export const userLoginAttempt = (email, password) => {
+    return (dispatch) => {
+        return requests.post('/login_check', {email, password}).then(
+            response => console.log(response))
+            .catch(error => {
+                console.log('Login Failed');
+            });
+    }
+};
+
+
 

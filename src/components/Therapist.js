@@ -10,6 +10,7 @@ export class Therapist extends React.Component {
         if (therapist === null) {
             return (<div>Therapist doesn't exist</div>);
         }
+        const listExercises = therapist.exercises.map((exercise) => <li key={exercise.id}>{exercise.name}</li>);
         return (
             <div className={"card mb-3 mt-3 shadow-sm"}>
                 <div className={"card-body"}>
@@ -25,6 +26,9 @@ export class Therapist extends React.Component {
                     </li>
                     <li className={"list-group-item"}>
                         Nr telefon: {therapist.phone}
+                    </li>
+                    <li className={"list-group-item"}>
+                        Cwiczenia: {listExercises}
                     </li>
                 </ul>
                 </div>
