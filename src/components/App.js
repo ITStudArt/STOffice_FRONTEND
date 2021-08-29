@@ -8,6 +8,17 @@ import TherapistContainer from "./TherapistContainer";
 import PatientContainer from "./PatientContainer";
 import Header from "./Header";
 import {requests} from "../agent";
+import {connect} from "react-redux";
+import authentication from "../reducers/authentication";
+import {userProfileFetch} from "../actions/action";
+
+const mapStateToProps = state =>({
+   ...state.authentication
+});
+
+const mapDispatchToProps = {
+    userProfileFetch
+};
 
 class App extends React.Component{
     constructor(props) {
@@ -17,10 +28,29 @@ class App extends React.Component{
             requests.setToken(token);
         }
     }
+    componentDidMount() {
+        const userId = window.localStorage.getItem('userId');
+        const {userProfileFetch} = this.props;
+        if(userId){
+            userProfileFetch(userId);
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const {userId, userProfileFetch} = this.props;
+        if(prevProps.userId !== userId && userId !==null){
+            console.log(`Old user id ${prevProps.userId}`)
+            console.log(`New user id ${userId}`)
+            userProfileFetch(userId);
+
+        }
+    }
+
     render() {
+        const {isAuthenticated, userData} = this.props;
         return (
             <div>
-                <Header/>
+                <Header isAuthenticated={isAuthenticated} userData={userData}/>
                 <Switch>
                     <Route path={"/login"} component={props => <LoginForm {...props} />} />
                     <Route path={"/exercises"} component={ExercisesListContainer}/>
@@ -35,4 +65,4 @@ class App extends React.Component{
         );
     }
 }
-export default App;
+export default connect(mapStateToProps,mapDispatchToProps)(App);

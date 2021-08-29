@@ -12,8 +12,8 @@ const mapDispatchToProps ={
 };
 
 class LoginForm extends React.Component{
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevProps.token !== this.props.token){
+    componentDidUpdate(prevProps) {
+        if(prevProps.token !== this.props.token || this.props.token !=null){
             this.props.history.push('/');
         }
     }
@@ -25,9 +25,11 @@ class LoginForm extends React.Component{
         );
     }
     render() {
-        const {handleSubmit} = this.props;
+        const {handleSubmit, error} = this.props;
+
         return (
             <div className={"text-center"}>
+                {error && <div className={"alert alert-danger"}>{error}</div>}
                 <form className={"mt-4"} onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                     <Field name="email" label={"Email"} type={"text"} component={renderField}/>
                     <Field name="password" label={"Hasło"} type={"password"} component={renderField}/>

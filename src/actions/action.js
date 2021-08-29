@@ -1,6 +1,7 @@
 import {requests} from "../agent";
 import * as CONSTRAINTS from "./constraints";
-import {USER_LOGIN_SUCCESS} from "./constraints";
+import {USER_LOGIN_SUCCESS, USER_PROFILE_ERROR, USER_PROFILE_RECEIVED, USER_PROFILE_REQUEST} from "./constraints";
+import {SubmissionError} from "redux-form";
 
 
 
@@ -167,8 +168,40 @@ export const userLoginAttempt = (email, password) => {
         return requests.post('/login_check', {email, password},false).then(
             response => dispatch(userLoginSuccess(response.token,response.id)))
             .catch(error => {
-                console.log('Login Failed');
+                throw new SubmissionError({
+                    _error: 'Email lub hasło są niepoprawne'
+                })
             });
+    }
+};
+
+// User
+export const userProfileRequest = () => {
+    return {
+        type: USER_PROFILE_REQUEST
+    }
+};
+
+export const userProfileError = () => {
+    return {
+        type: USER_PROFILE_ERROR
+    }
+};
+
+export const userProfileReceived = (userId, userData) => {
+    return {
+        type: USER_PROFILE_RECEIVED,
+        userData,
+        userId
+    }
+};
+
+export const userProfileFetch = (userId) => {
+    return (dispatch) => {
+        dispatch(userProfileRequest());
+        return requests.get(`/users/${userId}`, true).then(
+            response => dispatch(userProfileReceived(userId,response))
+        ).catch(error => dispatch(userProfileError()))
     }
 };
 
