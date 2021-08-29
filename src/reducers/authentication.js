@@ -1,4 +1,4 @@
-import {USER_LOGIN_SUCCESS, USER_PROFILE_RECEIVED} from "../actions/constraints";
+import {USER_LOGIN_SUCCESS, USER_PROFILE_RECEIVED, USER_SET_ID} from "../actions/constraints";
 import {act} from "react-dom/test-utils";
 
 export default (state= {
@@ -13,6 +13,12 @@ export default (state= {
               ...state,
               token: action.token,
               userId: action.userId,
+                isAuthenticated: true
+            };
+        case USER_SET_ID:
+            return{
+                ...state,
+                userId: action.userId,
                 isAuthenticated: true
             };
         case USER_PROFILE_RECEIVED:

@@ -10,14 +10,15 @@ import Header from "./Header";
 import {requests} from "../agent";
 import {connect} from "react-redux";
 import authentication from "../reducers/authentication";
-import {userProfileFetch} from "../actions/action";
+import {userProfileFetch, userSetId} from "../actions/action";
 
 const mapStateToProps = state =>({
    ...state.authentication
 });
 
 const mapDispatchToProps = {
-    userProfileFetch
+    userProfileFetch,
+    userSetId
 };
 
 class App extends React.Component{
@@ -30,15 +31,16 @@ class App extends React.Component{
     }
     componentDidMount() {
         const userId = window.localStorage.getItem('userId');
-        const {userProfileFetch} = this.props;
+        const {userSetId} = this.props;
+
         if(userId){
-            userProfileFetch(userId);
+            userSetId(userId);
         }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        const {userId, userProfileFetch} = this.props;
-        if(prevProps.userId !== userId && userId !==null){
+        const {userId,userData, userProfileFetch} = this.props;
+        if(prevProps.userId !== userId && userId !==null && userData === null){
             console.log(`Old user id ${prevProps.userId}`)
             console.log(`New user id ${userId}`)
             userProfileFetch(userId);

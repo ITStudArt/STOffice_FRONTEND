@@ -4,11 +4,13 @@ import {exercisesListAdd, exercisesListFetch} from "../actions/action";
 import {connect} from "react-redux";
 import {requests} from "../agent";
 import {Spinner} from "./Spinner";
+import ExerciseForm from "./ExerciseForm";
 
 
 const mapStateToProps = state =>(
     {
-        ...state.exercisesList
+        ...state.exercisesList,
+        isAuthenticated: state.authentication.isAuthenticated
     }
 );
 const mapDispatchToProps ={
@@ -20,13 +22,15 @@ class ExercisesListContainer extends React.Component{
     }
 
     render() {
-        const {exercises, isFetching} = this.props;
+        const {exercises, isFetching, isAuthenticated} = this.props;
         if(isFetching){
             return (<Spinner/>);
         }
         return (
-
-            <ExercisesList exercises={exercises}/>
+            <div>
+                {isAuthenticated && <ExercisesList exercises={exercises}/>}
+                {isAuthenticated && <ExerciseForm/>}
+            </div>
         );
     }
 }

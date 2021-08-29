@@ -1,10 +1,29 @@
 import {requests} from "../agent";
 import * as CONSTRAINTS from "./constraints";
-import {USER_LOGIN_SUCCESS, USER_PROFILE_ERROR, USER_PROFILE_RECEIVED, USER_PROFILE_REQUEST} from "./constraints";
+import {
+    USER_LOGIN_SUCCESS,
+    USER_PROFILE_ERROR,
+    USER_PROFILE_RECEIVED,
+    USER_PROFILE_REQUEST,
+    USER_SET_ID
+} from "./constraints";
 import {SubmissionError} from "redux-form";
 
 
+// Exercise ADD
+export const exercisesReceived= (exercise) =>({
+    type: CONSTRAINTS.EXERCISES_LIST_RECEIVED,
+    data
+});
 
+export const exerciseAdd = (exercise) =>{
+    return (dispatch)=>{
+        return requests.post('/exercises',{
+            content: exercise
+        }).then(response =>dispatch(exerciseAdded(response)))
+}
+
+};
 
 // Exercise LIST
 export const exercisesListRequest = () =>({
@@ -175,7 +194,16 @@ export const userLoginAttempt = (email, password) => {
     }
 };
 
+
 // User
+
+export const userSetId = (userId) => {
+    return {
+        type: USER_SET_ID,
+        userId
+    }
+};
+
 export const userProfileRequest = () => {
     return {
         type: USER_PROFILE_REQUEST
