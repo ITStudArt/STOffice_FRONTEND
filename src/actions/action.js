@@ -1,7 +1,7 @@
 import {requests} from "../agent";
 import * as CONSTRAINTS from "./constraints";
 import {
-    EXERCISE_ADDED, FILE_UPLOAD_ERROR, FILE_UPLOAD_REQUEST, FILE_UPLOADED,
+    EXERCISE_ADDED, FILE_UPLOAD_ERROR, FILE_UPLOAD_REQUEST, FILE_UPLOADED, THERAPIST_ADDED, USER_ADDED,
     USER_LOGIN_SUCCESS,
     USER_PROFILE_ERROR,
     USER_PROFILE_RECEIVED,
@@ -114,6 +114,24 @@ export const therapistUnload = () =>(
         type: CONSTRAINTS.THERAPIST_UNLOAD
     }
 );
+// User ADD
+
+export const userAdded=(user_db)=>({
+    type: USER_ADDED,
+    user_db
+})
+
+export const userAdd = (name,surname, email, phone,photo, password, retypedPassword) =>{
+    return (dispatch)=>{
+        return requests.post('/users', {name,surname, email, password, retypedPassword, photo, phone}
+        ).
+        catch(error =>{
+            throw new SubmissionError({
+                _error: 'Złe dane'
+            })
+        })
+    }
+};
 
 // Terapist ADD
 
@@ -122,9 +140,10 @@ export const therapistAdded=(therapist)=>({
     therapist
 })
 
-export const therapistAdd = (exercise) =>{
+export const therapistAdd = (therapist) =>{
+    console.log(therapist);
     return (dispatch)=>{
-        return requests.upload('/exercises',exercise
+        return requests.upload('/therapists',therapist
         ).then(response =>dispatch(therapistAdded(response))).
         catch(error=>{
             console.log(error)
@@ -277,6 +296,31 @@ export const userProfileFetch = (userId) => {
         ).catch(error => dispatch(userProfileError()))
     }
 };
+
+export const userIdRequest = () =>({
+    type: CONSTRAINTS.USER_REQUEST
+});
+
+export const userIdError = (error) =>({
+    type: CONSTRAINTS.USER_ERROR,
+    error
+});
+export const userIdReceived= (data) =>({
+    type: CONSTRAINTS.USER_RECEIVED,
+    data
+});
+
+export const userIdFetch = (email) => {
+    return (dispatch) => {
+        dispatch(userProfileRequest());
+        return requests.get(`/users?email=${email}`, true).then(
+            response => response.json()
+        ).catch(error => dispatch(userProfileError()))
+    }
+};
+
+
+
 
 
 

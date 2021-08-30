@@ -16,8 +16,6 @@ class ExerciseForm extends React.Component{
         const file_data = new FormData();
         file_data.append('file', "G:\\Studia\\Untitled-1.png");
         file_data.append('name', "SOME NAME")
-        console.log(values.exname);
-        console.log(values.fileUp);
         return this.props.exerciseAdd(file_data).then(()=>reset());
     }
     render(){

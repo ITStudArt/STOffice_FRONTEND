@@ -8,7 +8,6 @@ export default class Header extends React.Component{
         if(null === userData){
             return (<Spinner/>);
         }
-        console.log(userData);
         return (<span>Hello {userData.name}</span>);
     }
     render(){

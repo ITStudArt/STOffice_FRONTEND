@@ -8,7 +8,6 @@ class TherapistsList extends React.Component{
         if(therapists === null || therapists.length===0){
             return (<div>No therapists available</div>);
         }
-        console.log(therapists);
         return (
             <div>
                 {therapists && therapists.map(therapist => (

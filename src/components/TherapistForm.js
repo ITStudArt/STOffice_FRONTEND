@@ -3,17 +3,26 @@ import {Field, reduxForm} from "redux-form";
 import {renderField} from "./form";
 import FileUpload from "./FileUpload";
 import {connect} from "react-redux";
+import {therapistAdd, userAdd, userIdFetch} from "../actions/action";
+import {requests} from "../agent";
+
+const mapDispatchToProps={
+    userAdd,
+    therapistAdd,
+    userIdFetch
+};
 
 class TherapistForm extends React.Component{
     onSubmit(values){
-        const {exerciseAdd,userId, reset} = this.props;
-        const file_data = new FormData();
-        file_data.append('file', "G:\\Studia\\Untitled-1.png");
-        file_data.append('name', "SOME NAME")
-        console.log(values);
+        //return this.props.userAdd(...Object.values(values));
+
+        this.props.userAdd(values.name,values.surname,values.email,values.phone,values.photo,values.password,values.retypedPassword);
+        const email = "wlasc@gmail.com";
+        //this.props.userIdFetch("wlasc@gmail.com");
+        //return this.props.therapistAdd(user_data,therapist_data)
     }
     render(){
-        const {handleSubmit, submitting} = this.props;
+        const {handleSubmit, submitting,user} = this.props;
         return(
             <div className={"card mb-3 mt-3 shadow-sm"}>
                 <div className={"card-body"}>
@@ -24,7 +33,7 @@ class TherapistForm extends React.Component{
                         <Field name={"phone"} label={"Numer telefonu"} type={"text"} component={renderField}/>
                         <Field name={"photo"} label={"Dodaj zdjęcie:"} type={"text"} component={renderField}/>
                         <Field name={"password"} label={"Podaj hasło"} type={"password"} component={renderField}/>
-                        <Field name={"retypedpassword"} label={"Powtórz hasło"} type={"password"} component={renderField}/>
+                        <Field name={"retypedPassword"} label={"Powtórz hasło"} type={"password"} component={renderField}/>
                         <Field name={"specialization"} label={"Specjalizacja: "} type={"text"} component={renderField}/>
                         <Field name={"account_number"} label={"Numer konta:"} type={"text"} component={renderField}/>
                         <Field name={"hourly_rate"} label={"Placa(zl/h):"} type={"text"} component={renderField}/>
@@ -37,4 +46,4 @@ class TherapistForm extends React.Component{
 }
 export default reduxForm({
     form: 'TherapistForm'
-})(connect(null,null)(TherapistForm))
+})(connect(null,mapDispatchToProps)(TherapistForm))
