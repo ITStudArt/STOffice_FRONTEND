@@ -1,6 +1,7 @@
 import {requests} from "../agent";
 import * as CONSTRAINTS from "./constraints";
 import {
+    EXERCISE_ADDED, FILE_UPLOAD_ERROR, FILE_UPLOAD_REQUEST, FILE_UPLOADED,
     USER_LOGIN_SUCCESS,
     USER_PROFILE_ERROR,
     USER_PROFILE_RECEIVED,
@@ -11,19 +12,46 @@ import {SubmissionError} from "redux-form";
 
 
 // Exercise ADD
-export const exercisesReceived= (exercise) =>({
-    type: CONSTRAINTS.EXERCISES_LIST_RECEIVED,
-    data
-});
+export const exerciseAdded=(exercise)=>({
+    type: EXERCISE_ADDED,
+    exercise
+})
 
 export const exerciseAdd = (exercise) =>{
     return (dispatch)=>{
         return requests.post('/exercises',{
-            content: exercise
+            file: "JAKIS FILE",
+            name: "JAKI TYTUL"
         }).then(response =>dispatch(exerciseAdded(response)))
 }
-
 };
+
+export const fileUploaded = (data) => {
+    return{
+        type: FILE_UPLOADED,
+        file: data
+    }
+};
+export const fileUploadRequest = () => {
+    return {
+        type: FILE_UPLOAD_REQUEST
+    }
+
+}
+export const fileUploadError = (error) =>{
+    return{
+        type: FILE_UPLOAD_ERROR,
+        error
+    }
+};
+export const uploadFile = (file) =>{
+    return (dispatch) =>{
+        dispatch(fileUploadRequest());
+        return requests.upload('/exercises',file)
+            .then(response => dispatch(fileUploaded(file)))
+            .catch(error=>dispatch(fileUploadError(error)))
+    }
+}
 
 // Exercise LIST
 export const exercisesListRequest = () =>({
