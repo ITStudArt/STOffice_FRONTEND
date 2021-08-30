@@ -4,11 +4,15 @@ import {patientsListAdd, patientsListFetch} from "../actions/action";
 import {connect} from "react-redux";
 import {requests} from "../agent";
 import {Spinner} from "./Spinner";
+import ExercisesList from "./ExercisesList";
+import ExerciseForm from "./ExerciseForm";
+import PatientForm from "./PatientForm";
 
 
 const mapStateToProps = state =>(
     {
-        ...state.patientsList
+        ...state.patientsList,
+        isAuthenticated: state.authentication.isAuthenticated
     }
 );
 const mapDispatchToProps ={
@@ -20,13 +24,15 @@ class PatientsListContainer extends React.Component{
     }
 
     render() {
-        const {patients, isFetching} = this.props;
+        const {patients, isFetching,isAuthenticated, userId} = this.props;
         if(isFetching){
             return (<Spinner/>);
         }
         return (
-
-            <PatientsList patients={patients}/>
+            <div>
+                {isAuthenticated && <PatientsList patients={patients}/>}
+                {isAuthenticated && <PatientForm userId={userId}/>}
+            </div>
 
         );
     }

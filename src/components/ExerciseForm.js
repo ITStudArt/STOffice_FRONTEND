@@ -12,9 +12,13 @@ const mapDispatchToProps={
 
 class ExerciseForm extends React.Component{
     onSubmit(values){
-        const {exerciseAdd,userId} = this.props;
-        console.log(this.props);
-        return this.props.exerciseAdd(values.content);
+        const {exerciseAdd,userId, reset} = this.props;
+        const file_data = new FormData();
+        file_data.append('file', "G:\\Studia\\Untitled-1.png");
+        file_data.append('name', "SOME NAME")
+        console.log(values.exname);
+        console.log(values.fileUp);
+        return this.props.exerciseAdd(file_data).then(()=>reset());
     }
     render(){
         const {handleSubmit, submitting} = this.props;
@@ -22,8 +26,8 @@ class ExerciseForm extends React.Component{
             <div className={"card mb-3 mt-3 shadow-sm"}>
                 <div className={"card-body"}>
                     <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                        <Field name={"name"} label={"Podaj nazwe cwiczenia"} type={"textarea"} component={renderField}/>
-                        <FileUpload name={"file"}/>
+                        <Field name={"exname"} label={"Podaj nazwe cwiczenia"} type={"textarea"} component={renderField}/>
+                        <FileUpload name={"fileUp"}/>
                         <button type={"submit"} className={"btn btn-primary btn-big btn-block"} disabled={submitting}> Dodaj </button>
                     </form>
                 </div>

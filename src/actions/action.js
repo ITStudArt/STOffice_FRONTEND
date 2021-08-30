@@ -19,10 +19,11 @@ export const exerciseAdded=(exercise)=>({
 
 export const exerciseAdd = (exercise) =>{
     return (dispatch)=>{
-        return requests.post('/exercises',{
-            file: "JAKIS FILE",
-            name: "JAKI TYTUL"
-        }).then(response =>dispatch(exerciseAdded(response)))
+        return requests.upload('/exercises',exercise
+        ).then(response =>dispatch(exerciseAdded(response))).
+            catch(error=>{
+                console.log(error)
+        })
 }
 };
 
@@ -114,6 +115,22 @@ export const therapistUnload = () =>(
     }
 );
 
+// Terapist ADD
+
+export const therapistAdded=(therapist)=>({
+    type: THERAPIST_ADDED,
+    therapist
+})
+
+export const therapistAdd = (exercise) =>{
+    return (dispatch)=>{
+        return requests.upload('/exercises',exercise
+        ).then(response =>dispatch(therapistAdded(response))).
+        catch(error=>{
+            console.log(error)
+        })
+    }
+};
 
 // Therapist LIST
 export const therapistsListRequest = () =>({
