@@ -20,19 +20,26 @@ const mapDispatchToProps ={
 };
 class TherapistsListContainer extends React.Component{
     componentDidMount() {
-        this.props.therapistsListFetch();
+        const {history,role} = this.props;
+        if(role === "ROLE_USER" || role === "ROLE_DEF_USER"){
+            history.push("/no_access");
+            }
+        else{
+            this.props.therapistsListFetch();
+        }
+
+
     }
 
 
     render() {
-        const {therapists, isFetching, isAuthenticated, userId} = this.props;
+        const {therapists, isFetching, isAuthenticated, history, role} = this.props;
         if(isFetching){
             return (<Spinner/>);
         }
         return (
             <div>
-                {isAuthenticated && <TherapistsList therapists={therapists}/>}
-                {isAuthenticated && <TherapistForm userId={userId}/>}
+                {isAuthenticated && role!== 'ROLE_PATIENT' && role!== 'ROLE_DEF_USER' && <TherapistsList therapists={therapists} history={history} role={role}/>}
             </div>
 
         );

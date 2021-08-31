@@ -11,7 +11,16 @@ export default class Header extends React.Component{
         return (`Witaj ${userData.name.trim()} ${userData.surname.trim()}`);
     }
     render(){
-        const {isAuthenticated,logout} = this.props;
+        const {isAuthenticated,logout, role} = this.props;
+        const isPatient = () =>{
+            return role === "ROLE_PATIENT" || role === "ROLE_DEF_USER";
+        };
+        const ifTherapist = () =>{
+            return role !== "ROLE_PATIENT" || role !== "ROLE_DEF_USER" || role !== null;
+        };
+        const isAdmin = () =>{
+            return role ==="ROLE_ADMIN" || role ==="ROLE_SUPERADMIN";
+        }
         return(
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
                 <div className="container-fluid">
@@ -25,7 +34,7 @@ export default class Header extends React.Component{
                     <span className="navbar-toggler-icon"/>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    {isAuthenticated ?
+                    {isAuthenticated ? (
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
 
                             <li className="nav-item active">
@@ -34,40 +43,26 @@ export default class Header extends React.Component{
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link active" to="/patients">Pacjenci</Link>
+                            <Link className="nav-link active" to="/patients">Pacjenci</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link active" to="/exercises">Cwiczenia</Link>
+                            <Link className="nav-link active" to="/therapists">Terapeuci</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link active" to="/therapists">Terapeuci</Link>
+                            <Link className="nav-link active" to="/exercises">Cwiczenia</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link active" to="#" onClick={logout}>Wyloguj się</Link>
                             </li>
 
-                        {true ? " " :
-                            <li className="nav-item">
-                                <div className="dropdown">
-                                    <a className="nav-link active dropdown-toggle" href="#" role="button"
-                                       id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Dropdown link
-                                    </a>
-                                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <li><a className="dropdown-item" href="#">Action</a></li>
-                                        <li><a className="dropdown-item" href="#">Another action</a></li>
-                                        <li><a className="dropdown-item" href="#">Something else here</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                        }
+
 
                         </ul>
-                        :
+                        ):(
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0"><li className="nav-item">
                             <Link className="nav-link active" to="/login">Zaloguj się</Link>
                         </li></ul>
-                    }
+                    )}
                 </div>
             </nav>
 

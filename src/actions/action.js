@@ -51,7 +51,12 @@ export const uploadFile = (file) =>{
         dispatch(fileUploadRequest());
         return requests.upload('/exercises',file)
             .then(response => dispatch(fileUploaded(file)))
-            .catch(error=>dispatch(fileUploadError(error)))
+            .catch(error=>{
+                if (error.response.body['hydra:description']) {
+                    alert(error.response.body['hydra:description'])
+                }
+                dispatch(fileUploadError(error));
+            });
     }
 }
 
@@ -73,9 +78,14 @@ export const exercisesListReceived= (data) =>({
 export const exercisesListFetch = () => {
     return (dispatch) => {
         dispatch(exercisesListRequest());
-        return requests.get('/exercises')
+        return requests.get('/exercises',true)
             .then(response=>dispatch(exercisesListReceived(response)))
-            .catch(error=>dispatch(exercisesListError(error)));
+            .catch(error=> {
+                if (error.response.body['hydra:description']) {
+                    alert(error.response.body['hydra:description'])
+                }
+                dispatch(exercisesListError(error));
+            });
     }
 };
 export const exercisesListAdd = () =>({
@@ -129,6 +139,10 @@ export const userAdd = (name,surname, email, phone,photo, password, retypedPassw
             response=>dispatch(userAdded(response))
         ).
         catch(error=>{
+            if(error.response.status === 401){
+                alert("Sesja wygasła. Zaloguj się ponownie");
+                return dispatch(userLogout());
+            }
             throw new SubmissionError(parseApiError(error))
         })
     }
@@ -142,7 +156,6 @@ export const therapistAdded=(therapist)=>({
 })
 
 export const therapistAdd = (therapist) =>{
-    console.log(therapist);
     return (dispatch)=>{
         return requests.upload('/therapists',therapist
         ).then(response =>dispatch(therapistAdded(response))).
@@ -169,9 +182,15 @@ export const therapistsListReceived= (data) =>({
 export const therapistsListFetch = () => {
     return (dispatch) => {
         dispatch(therapistsListRequest());
-        return requests.get('/users?roles=ROLE_THERAPIST')
+        return requests.get('/users?roles=ROLE_THERAPIST',true)
             .then(response=>dispatch(therapistsListReceived(response)))
-            .catch(error=>dispatch(therapistsListError(error)));
+            .catch(error=>{
+                if(error.response.body['hydra:description']){
+                    alert(error.response.body['hydra:description'])
+                }
+                dispatch(therapistsListError(error));
+                }
+            );
     }
 };
 export const therapistsListAdd = () =>({
@@ -232,9 +251,14 @@ export const patientsListAdd = () =>({
 export const patientsListFetch = () => {
     return (dispatch) => {
         dispatch(patientsListRequest());
-        return requests.get('/users?roles=ROLE_PATIENT')
+        return requests.get('/users?roles=ROLE_PATIENT',true)
             .then(response=>dispatch(patientsListReceived(response)))
-            .catch(error=>dispatch(patientsListError(error)));
+            .catch(error=>{
+                if(error.response.body['hydra:description']){
+                    alert(error.response.body['hydra:description'])
+                }
+                dispatch(patientsListError(error));
+            });
     }
 };
 

@@ -24,14 +24,13 @@ class PatientsListContainer extends React.Component{
     }
 
     render() {
-        const {patients, isFetching,isAuthenticated, userId} = this.props;
+        const {patients, isFetching,isAuthenticated, history} = this.props;
         if(isFetching){
             return (<Spinner/>);
         }
         return (
             <div>
-                {isAuthenticated && <PatientsList patients={patients}/>}
-                {isAuthenticated && <PatientForm userId={userId}/>}
+                {isAuthenticated && <PatientsList patients={patients} history={history}/>}
             </div>
 
         );
