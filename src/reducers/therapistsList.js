@@ -11,16 +11,18 @@ export default(state={
 },action)=>{
     switch(action.type){
         case THERAPISTS_LIST_REQUEST:
-            return {
+            state= {
                 ...state,
                 isFetching: true
             };
+            return state;
         case THERAPISTS_LIST_RECEIVED:
-            return{
+            state={
                 ...state,
                 therapists: action.data['hydra:member'],
                 isFetching: false
             };
+            return state;
         case THERAPISTS_LIST_ERROR:
             return{
                 ...state,

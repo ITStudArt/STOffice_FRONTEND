@@ -14,18 +14,16 @@ const mapDispatchToProps={
 
 class TherapistForm extends React.Component{
     onSubmit(values){
-        //return this.props.userAdd(...Object.values(values));
-
-        this.props.userAdd(values.name,values.surname,values.email,values.phone,values.photo,values.password,values.retypedPassword);
-        const email = "wlasc@gmail.com";
-        //this.props.userIdFetch("wlasc@gmail.com");
-        //return this.props.therapistAdd(user_data,therapist_data)
+        const {userAdd, reset} = this.props;
+        const role = ["ROLE_THERAPIST"]
+        return this.props.userAdd(values.name,values.surname,values.email,values.phone,values.photo,values.password,values.retypedPassword,role).then(()=>reset());
     }
     render(){
-        const {handleSubmit, submitting,user} = this.props;
+        const {handleSubmit, submitting,user, error} = this.props;
         return(
             <div className={"card mb-3 mt-3 shadow-sm"}>
                 <div className={"card-body"}>
+                    {error && <div className={"alert alert-danger"}>{error}</div>}
                     <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                         <Field name={"name"} label={"Imie"} type={"text"} component={renderField}/>
                         <Field name={"surname"} label={"Nazwisko"} type={"text"} component={renderField}/>

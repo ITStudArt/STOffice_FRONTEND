@@ -2,13 +2,14 @@ import {requests} from "../agent";
 import * as CONSTRAINTS from "./constraints";
 import {
     EXERCISE_ADDED, FILE_UPLOAD_ERROR, FILE_UPLOAD_REQUEST, FILE_UPLOADED, THERAPIST_ADDED, USER_ADDED,
-    USER_LOGIN_SUCCESS,
+    USER_LOGIN_SUCCESS, USER_LOGOUT,
     USER_PROFILE_ERROR,
     USER_PROFILE_RECEIVED,
     USER_PROFILE_REQUEST,
     USER_SET_ID
 } from "./constraints";
 import {SubmissionError} from "redux-form";
+import {parseApiError} from "../apiUtils";
 
 
 // Exercise ADD
@@ -121,14 +122,14 @@ export const userAdded=(user_db)=>({
     user_db
 })
 
-export const userAdd = (name,surname, email, phone,photo, password, retypedPassword) =>{
+export const userAdd = (name,surname, email, phone,photo, password, retypedPassword, role) =>{
     return (dispatch)=>{
-        return requests.post('/users', {name,surname, email, password, retypedPassword, photo, phone}
+        return requests.post('/users', {name,surname, email, password, retypedPassword, photo, phone, role}
+        ).then(
+            response=>dispatch(userAdded(response))
         ).
-        catch(error =>{
-            throw new SubmissionError({
-                _error: 'Złe dane'
-            })
+        catch(error=>{
+            throw new SubmissionError(parseApiError(error))
         })
     }
 };
@@ -199,7 +200,7 @@ export const patientFetch = (id) =>
     {
         return(dispatch)=>{
             dispatch(patientRequest());
-            return requests.get(`/users/${id}`)
+            return requests.get(`/users/${id}`,true)
                 .then(response => dispatch(patientReceived(response)))
                 .catch(error => dispatch(patientError(error)));
 
@@ -250,13 +251,20 @@ export const userLoginAttempt = (email, password) => {
     return (dispatch) => {
         return requests.post('/login_check', {email, password},false).then(
             response => dispatch(userLoginSuccess(response.token,response.id)))
-            .catch(error => {
+            .catch(() => {
                 throw new SubmissionError({
                     _error: 'Email lub hasło są niepoprawne'
                 })
             });
     }
 };
+
+// Logout
+export const userLogout= () =>{
+    return {
+        type: USER_LOGOUT
+    }
+}
 
 
 // User
@@ -274,9 +282,10 @@ export const userProfileRequest = () => {
     }
 };
 
-export const userProfileError = () => {
+export const userProfileError = (userId) => {
     return {
-        type: USER_PROFILE_ERROR
+        type: USER_PROFILE_ERROR,
+        userId
     }
 };
 
@@ -291,9 +300,9 @@ export const userProfileReceived = (userId, userData) => {
 export const userProfileFetch = (userId) => {
     return (dispatch) => {
         dispatch(userProfileRequest());
-        return requests.get(`/users/${userId}`, true).then(
+        return requests.get(`/users/${userId}`,true).then(
             response => dispatch(userProfileReceived(userId,response))
-        ).catch(error => dispatch(userProfileError()))
+        ).catch(() => dispatch(userProfileError(userId)))
     }
 };
 
@@ -305,20 +314,19 @@ export const userIdError = (error) =>({
     type: CONSTRAINTS.USER_ERROR,
     error
 });
-export const userIdReceived= (data) =>({
+export const userIdReceived= (createdUser) =>({
     type: CONSTRAINTS.USER_RECEIVED,
-    data
+    createdUser
 });
 
 export const userIdFetch = (email) => {
     return (dispatch) => {
         dispatch(userProfileRequest());
         return requests.get(`/users?email=${email}`, true).then(
-            response => response.json()
+            response => dispatch(userIdReceived(response))
         ).catch(error => dispatch(userProfileError()))
     }
 };
-
 
 
 

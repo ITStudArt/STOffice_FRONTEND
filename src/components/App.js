@@ -10,15 +10,16 @@ import Header from "./Header";
 import {requests} from "../agent";
 import {connect} from "react-redux";
 import authentication from "../reducers/authentication";
-import {userProfileFetch, userSetId} from "../actions/action";
+import {userLogout, userProfileFetch, userSetId} from "../actions/action";
 
 const mapStateToProps = state =>({
-   ...state.authentication
+    ...state.authentication
 });
 
 const mapDispatchToProps = {
     userProfileFetch,
-    userSetId
+    userSetId,
+    userLogout
 };
 
 class App extends React.Component{
@@ -26,6 +27,7 @@ class App extends React.Component{
         super(props);
         const token = window.localStorage.getItem('jwtToken');
         if (token){
+            console.log("SET TOKEN");
             requests.setToken(token);
         }
     }
@@ -40,17 +42,16 @@ class App extends React.Component{
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         const {userId,userData, userProfileFetch} = this.props;
-        if(prevProps.userId !== userId && userId !==null && userData === null){
+        if(prevProps.userId !== userId && userId !== null && userData === null){
             userProfileFetch(userId);
-
         }
     }
 
     render() {
-        const {isAuthenticated, userData} = this.props;
+        const {isAuthenticated, userData, userLogout} = this.props;
         return (
             <div>
-                <Header isAuthenticated={isAuthenticated} userData={userData}/>
+                <Header isAuthenticated={isAuthenticated} userData={userData} logout={userLogout}/>
                 <Switch>
                     <Route path={"/login"} component={props => <LoginForm {...props} />} />
                     <Route path={"/exercises"} component={ExercisesListContainer}/>

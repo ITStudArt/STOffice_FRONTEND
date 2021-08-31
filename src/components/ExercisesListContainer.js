@@ -23,9 +23,11 @@ class ExercisesListContainer extends React.Component{
 
     render() {
         const {exercises, isFetching, isAuthenticated, userId} = this.props;
+
         if(isFetching){
             return (<Spinner/>);
         }
+        console.log(userId);
         return (
             <div>
                 {isAuthenticated && <ExercisesList exercises={exercises}/>}

@@ -5,11 +5,20 @@ import FileUpload from "./FileUpload";
 import {connect} from "react-redux";
 
 class PatientForm extends React.Component{
+    onSubmit(values){
+        //return this.props.userAdd(...Object.values(values));
+        const role = ["ROLE_PATIENT"];
+        this.props.userAdd(values.name,values.surname,values.email,values.phone,values.photo,values.password,values.retypedPassword, role);
+        //return this.props.therapistAdd(user_data,therapist_data)
+    }
+
+
     render(){
+        const {handleSubmit, submitting} = this.props;
         return(
             <div className={"card mb-3 mt-3 shadow-sm"}>
                 <div className={"card-body"}>
-                    <form>
+                    <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                         <Field name={"parent_name"} label={"Imie rodzica"} type={"text"} component={renderField}/>
                         <Field name={"parent_surname"} label={"Nazwisko rodzica"} type={"text"} component={renderField}/>
                         <Field name={"kid_name"} label={"Imie pacjenta"} type={"text"} component={renderField}/>
@@ -21,7 +30,7 @@ class PatientForm extends React.Component{
                         <Field name={"retyped_password"} label={"Powtórz hasło"} type={"password"} component={renderField}/>
                         <Field name={"diagnosis_file"} label={"Diagnoza: "} type={"password"} component={renderField}/>
                         <Field name={"age"} label={"Wiek pacjenta:"} type={"text"} component={renderField}/>
-                        <button type={"submit"} className={"btn btn-primary btn-big btn-block"}> Dodaj </button>
+                        <button type={"submit"} className={"btn btn-primary btn-big btn-block"} disabled={submitting}> Dodaj </button>
                     </form>
                 </div>
             </div>

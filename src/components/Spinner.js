@@ -5,7 +5,7 @@ export class Spinner extends React.Component{
     render(){
         return (
                     <div className="loading">
-                        <div className="loader"></div>
+                        <div className="loader"/>
                     </div>
         );
     }

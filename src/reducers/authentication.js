@@ -1,5 +1,4 @@
-import {USER_LOGIN_SUCCESS, USER_PROFILE_RECEIVED, USER_SET_ID} from "../actions/constraints";
-import {act} from "react-dom/test-utils";
+import {USER_LOGIN_SUCCESS, USER_LOGOUT, USER_PROFILE_RECEIVED, USER_SET_ID} from "../actions/constraints";
 
 export default (state= {
     token:null,
@@ -24,9 +23,19 @@ export default (state= {
         case USER_PROFILE_RECEIVED:
             return{
                 ...state,
-                userData: (state.userId === action.userId && state.userData===null) ? action.userData : state.userData,
-                isAuthenticated: (state.userId === action.userId && state.userData===null)
+                userData: (state.userId === action.userId && state.userData === null)
+                    ? action.userData : state.userData,
+                isAuthenticated: (state.userId === action.userId && state.userData === null)
             };
+        case USER_LOGOUT:
+            console.log("LOGOUT");
+            return{
+                ...state,
+                token: null,
+                isAuthenticated: false,
+                userId: null,
+                userData: null
+            }
         default:
             return state;
     }

@@ -39,6 +39,7 @@ export const PATIENT_UNLOAD = 'PATIENT_UNLOAD';
 export const PATIENT_ADDED ='PATIENT_ADDED';
 
 export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
+export const USER_LOGOUT = 'USER_LOGOUT';
 export const USER_SET_ID = 'USER_SET_ID';
 export const USER_ADDED ='USER_ADDED';
 export const USER_REQUEST = 'USER_REQUEST';

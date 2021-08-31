@@ -4,9 +4,9 @@ const superagent = superagentPromise(_superagent, global.Promise);
 const API_ROOT = 'https://localhost:8000/api';
 const responseBody = response => response.body;
 
-let token = window.localStorage.getItem('jwtToken');
 
 const tokenPlugin = secured => {
+    let token = window.localStorage.getItem('jwtToken')
     return (request) => {
         if (token && secured) {
             request.set('Authorization', `Bearer ${token}`);
