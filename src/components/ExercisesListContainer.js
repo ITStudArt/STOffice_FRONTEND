@@ -1,31 +1,41 @@
 import React from "react";
 import ExercisesList from "./ExercisesList";
+import {exercisesListAdd, exercisesListFetch} from "../actions/action";
+import {connect} from "react-redux";
+import {requests} from "../agent";
+import {Spinner} from "./Spinner";
+import ExerciseForm from "./ExerciseForm";
 
+
+const mapStateToProps = state =>(
+    {
+        ...state.exercisesList,
+        isAuthenticated: state.authentication.isAuthenticated
+    }
+);
+const mapDispatchToProps ={
+    exercisesListFetch
+};
 class ExercisesListContainer extends React.Component{
-    constructor(props) {
-        super(props);
-        this.exercises=[
-            {
-                id: 1,
-                title: 'Hello'
-            },
-            {
-                id: 2,
-                title: 'Hello 2'
-            },
-            {
-                id: 3,
-                title: 'Hello_3'
-            }
-        ];
-
+    componentDidMount() {
+        this.props.exercisesListFetch();
     }
 
     render() {
-        return (
-            <ExercisesList exercises={this.exercises}/>
+        const {exercises, isFetching, isAuthenticated, userId, userData, history} = this.props;
+        if(!isAuthenticated){
+            this.props.history.push("/login");
+        }
 
+        if(isFetching || userData===null){
+            return (<Spinner/>);
+        }
+        return (
+            <div>
+                {isAuthenticated && <ExercisesList exercises={userData.exercises}/>}
+                {isAuthenticated && <ExerciseForm userId={userId}/>}
+            </div>
         );
     }
 }
-export default ExercisesListContainer;
+export default connect(mapStateToProps,mapDispatchToProps)(ExercisesListContainer);
