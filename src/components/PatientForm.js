@@ -3,18 +3,22 @@ import {Field, reduxForm} from "redux-form";
 import {renderField} from "./form";
 import FileUpload from "./FileUpload";
 import {connect} from "react-redux";
+import {therapistAdd, userAdd, userIdFetch} from "../actions/action";
+const mapDispatchToProps={
+    userAdd,
+    therapistAdd,
+    userIdFetch
+};
 
 class PatientForm extends React.Component{
     onSubmit(values){
-        //return this.props.userAdd(...Object.values(values));
         const role = ["ROLE_PATIENT"];
         this.props.userAdd(values.name,values.surname,values.email,values.phone,values.photo,values.password,values.retypedPassword, role);
-        //return this.props.therapistAdd(user_data,therapist_data)
     }
 
 
     render(){
-        const {handleSubmit, submitting} = this.props;
+        const {handleSubmit, submitting, isAuthenticated} = this.props;
         return(
             <div className={"card mb-3 mt-3 shadow-sm"}>
                 <div className={"card-body"}>
@@ -28,7 +32,7 @@ class PatientForm extends React.Component{
                         <Field name={"photo"} label={"Dodaj zdjęcie:"} type={"text"} component={renderField}/>
                         <Field name={"password"} label={"Podaj hasło"} type={"password"} component={renderField}/>
                         <Field name={"retyped_password"} label={"Powtórz hasło"} type={"password"} component={renderField}/>
-                        <Field name={"diagnosis_file"} label={"Diagnoza: "} type={"password"} component={renderField}/>
+                        <Field name={"diagnosis_file"} label={"Diagnoza: "} type={"text"} component={renderField}/>
                         <Field name={"age"} label={"Wiek pacjenta:"} type={"text"} component={renderField}/>
                         <button type={"submit"} className={"btn btn-primary btn-big btn-block"} disabled={submitting}> Dodaj </button>
                     </form>
@@ -39,4 +43,4 @@ class PatientForm extends React.Component{
 }
 export default reduxForm({
     form: 'PatientForm'
-})(connect(null,null)(PatientForm))
+})(connect(null,mapDispatchToProps)(PatientForm))

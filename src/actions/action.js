@@ -21,7 +21,7 @@ export const exerciseAdded=(exercise)=>({
 export const exerciseAdd = (exercise) =>{
     return (dispatch)=>{
         return requests.upload('/exercises',exercise
-        ).then(response =>dispatch(exerciseAdded(response))).
+        ,true).then(response =>dispatch(exerciseAdded(response))).
             catch(error=>{
                 console.log(error)
         })
@@ -49,7 +49,7 @@ export const fileUploadError = (error) =>{
 export const uploadFile = (file) =>{
     return (dispatch) =>{
         dispatch(fileUploadRequest());
-        return requests.upload('/exercises',file)
+        return requests.upload('/exercises',file,true)
             .then(response => dispatch(fileUploaded(file)))
             .catch(error=>{
                 if (error.response.body['hydra:description']) {
@@ -132,9 +132,9 @@ export const userAdded=(user_db)=>({
     user_db
 })
 
-export const userAdd = (name,surname, email, phone,photo, password, retypedPassword, role) =>{
+export const userAdd = (name,surname, email, phone,photo, password, retypedPassword, roles) =>{
     return (dispatch)=>{
-        return requests.post('/users', {name,surname, email, password, retypedPassword, photo, phone, role}
+        return requests.post('/users', {name,surname, email, password, retypedPassword, photo, phone, roles}
         ).then(
             response=>dispatch(userAdded(response))
         ).
@@ -251,7 +251,7 @@ export const patientsListAdd = () =>({
 export const patientsListFetch = () => {
     return (dispatch) => {
         dispatch(patientsListRequest());
-        return requests.get('/users?roles=ROLE_PATIENT',true)
+        return requests.get('/users?roles=ROLE_PATIENT&roles=ROLE_DEF_USER',true)
             .then(response=>dispatch(patientsListReceived(response)))
             .catch(error=>{
                 if(error.response.body['hydra:description']){

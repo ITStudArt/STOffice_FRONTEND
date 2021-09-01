@@ -25,7 +25,7 @@ export default class Header extends React.Component{
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
                 <div className="container-fluid">
                     <Link className="navbar-brand" to="/login">
-                            STOffice
+                        STOffice
                     </Link>
                 </div>
                 <button className="navbar-toggler" type="button" data-toggle="collapse"
@@ -35,7 +35,7 @@ export default class Header extends React.Component{
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     {isAuthenticated ? (
-                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
 
                             <li className="nav-item active">
                                 <Link to={"/profile"} className="nav-link active">
@@ -43,28 +43,30 @@ export default class Header extends React.Component{
                                 </Link>
                             </li>
                             <li className="nav-item">
-                            <Link className="nav-link active" to="/patients">Pacjenci</Link>
+                                <Link className="nav-link active" to="/patients">Pacjenci</Link>
                             </li>
                             <li className="nav-item">
-                            <Link className="nav-link active" to="/therapists">Terapeuci</Link>
+                                <Link className="nav-link active" to="/therapists">Terapeuci</Link>
                             </li>
                             <li className="nav-item">
-                            <Link className="nav-link active" to="/exercises">Cwiczenia</Link>
+                                <Link className="nav-link active" to="/exercises">Cwiczenia</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link active" to="#" onClick={logout}>Wyloguj się</Link>
+                                <Link className="nav-link active" to="/login" onClick={logout}>Wyloguj się</Link>
                             </li>
 
 
 
                         </ul>
-                        ):(
+                    ):(
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0"><li className="nav-item">
                             <Link className="nav-link active" to="/login">Zaloguj się</Link>
                         </li></ul>
                     )}
                 </div>
             </nav>
+
+
 
 
         );

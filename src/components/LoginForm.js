@@ -14,7 +14,7 @@ const mapDispatchToProps ={
 class LoginForm extends React.Component{
     componentDidUpdate(prevProps) {
         if(prevProps.token !== this.props.token){
-            this.props.history.push('/');
+            this.props.history.push('/exercises');
         }
     }
 

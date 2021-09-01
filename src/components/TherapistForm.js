@@ -15,7 +15,7 @@ const mapDispatchToProps={
 class TherapistForm extends React.Component{
     onSubmit(values){
         const {userAdd, reset} = this.props;
-        const role = ["ROLE_THERAPIST"]
+        const role = ['ROLE_THERAPIST'];
         return this.props.userAdd(values.name,values.surname,values.email,values.phone,values.photo,values.password,values.retypedPassword,role).then(()=>reset());
     }
     render(){

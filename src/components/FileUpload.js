@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import "./styles/exerciseForm.css";
 import {connect} from "react-redux";
 import {uploadFile} from "../actions/action";
@@ -26,3 +26,4 @@ class FileUpload extends React.Component{
     }
 }
 export default connect(null,mapDispatchToProps)(FileUpload);
+

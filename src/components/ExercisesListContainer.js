@@ -22,15 +22,17 @@ class ExercisesListContainer extends React.Component{
     }
 
     render() {
-        const {exercises, isFetching, isAuthenticated, userId} = this.props;
+        const {exercises, isFetching, isAuthenticated, userId, userData, history} = this.props;
+        if(!isAuthenticated){
+            this.props.history.push("/login");
+        }
 
-        if(isFetching){
+        if(isFetching || userData===null){
             return (<Spinner/>);
         }
-        console.log(userId);
         return (
             <div>
-                {isAuthenticated && <ExercisesList exercises={exercises}/>}
+                {isAuthenticated && <ExercisesList exercises={userData.exercises}/>}
                 {isAuthenticated && <ExerciseForm userId={userId}/>}
             </div>
         );

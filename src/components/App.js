@@ -13,6 +13,7 @@ import authentication from "../reducers/authentication";
 import {userLogout, userProfileFetch, userSetId} from "../actions/action";
 import TherapistForm from "./TherapistForm";
 import PatientForm from "./PatientForm";
+import MyProfile from "./myProfile";
 
 const mapStateToProps = state =>({
     ...state.authentication
@@ -51,22 +52,23 @@ class App extends React.Component{
     render() {
         const {isAuthenticated, userData, userLogout, userId} = this.props;
         let role;
-        if(userData !==null){
-            role = userData.roles[0];
-        }
 
         return (
             <div>
                 <Header isAuthenticated={isAuthenticated} userData={userData} logout={userLogout} role={role}/>
                 <Switch>
-                    <Route path={"/login"} component={props => <LoginForm {...props} />} />
-                    <Route path={"/exercises"} render={(props)=>(<ExercisesListContainer {...props} userId={userData}/>)}/>
-                    <Route path={"/therapists/:id"} component={TherapistContainer} role={role}/>
-                    <Route path={"/therapists"} render={(props)=>(<TherapistsListContainer {...props} userData={userData} role={role}/>)}/>
-                    <Route path={"/add_therapist"}  component={props => <TherapistForm {...props} role={role}/>}/>
-                    <Route path={"/patients/:id"} component={PatientContainer} role={role}/>
-                    <Route path={"/patients"} render={(props)=>(<PatientsListContainer {...props} role={role}/>)}/>
-                    <Route path={"/add_patient"}  component={props => <PatientForm {...props} role={role}/>}/>
+                    {!isAuthenticated && <Route path={"/login"} component={props => <LoginForm {...props} />} />}
+
+                    <Route path={"/exercises"} render={(props) => (
+                        <ExercisesListContainer {...props} userId={userData} userData={userData}/>)}/>
+                        <Route path={"/therapists/:id"} component={TherapistContainer} role={role}/>
+                        <Route path={"/therapists"} render={(props)=>(<TherapistsListContainer {...props} userData={userData} role={role}/>)}/>
+                        <Route path={"/add_therapist"}  component={props => <TherapistForm {...props} role={role}/>}/>
+                        <Route path={"/patients/:id"} component={PatientContainer} role={role}/>
+                        <Route path={"/patients"} render={(props)=>(<PatientsListContainer {...props} role={role}/>)}/>
+                        <Route path={"/add_patient"}  component={props => <PatientForm {...props} role={role}/>}/>
+                        <Route path={"/profile"}  component={props => <MyProfile {...props} userData={userData}/>}/>
+
 
                 </Switch>
             </div>

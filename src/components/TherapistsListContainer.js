@@ -21,8 +21,8 @@ const mapDispatchToProps ={
 class TherapistsListContainer extends React.Component{
     componentDidMount() {
         const {history,role} = this.props;
-        if(role === "ROLE_USER" || role === "ROLE_DEF_USER"){
-            history.push("/no_access");
+        if(role === "ROLE_PATIENT" || role === "ROLE_DEF_USER"){
+            alert("Brak dostepu");
             }
         else{
             this.props.therapistsListFetch();
@@ -38,10 +38,9 @@ class TherapistsListContainer extends React.Component{
             return (<Spinner/>);
         }
         return (
-            <div>
+            <div key={"Therapist_List_Container_Key"}>
                 {isAuthenticated && role!== 'ROLE_PATIENT' && role!== 'ROLE_DEF_USER' && <TherapistsList therapists={therapists} history={history} role={role}/>}
             </div>
-
         );
     }
 }
